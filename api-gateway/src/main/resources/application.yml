@@ -21,3 +21,7 @@ spring:
           uri: lb://book-service
           predicates:
           - Path=/book-service/**
+management:
+  tracing:
+    sampling:
+      probability: 1.0

@@ -3,7 +3,6 @@ package com.book.service.controller;
 import com.book.service.model.Book;
 import com.book.service.proxy.CambioProxy;
 import com.book.service.repository.BookRepository;
-import com.book.service.response.Cambio;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
 
 @Tag(name = "Book endpoint")
 @RestController
@@ -43,32 +39,5 @@ public class BookController {
         book.setPrice(cambio.getConvertedValue());
         return book;
     }
-
-    /*
-      =-=-= Versão usando Rest Template =-=-=
-    @GetMapping("/{id}/{currency}")
-    public Book findBook(@PathVariable Long id, @PathVariable String currency){
-
-        var book = repository.findById(id).get();
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("amount", book.getPrice().toString());
-        params.put("from", "USD");
-        params.put("to", currency);
-
-        var response = new RestTemplate()
-                .getForEntity(
-                        "http://localhost:8000/cambio-service/{amount}/{from}/{to}",
-                        Cambio.class,
-                        params);
-
-        var cambio = response.getBody();
-
-        var port = environment.getProperty("local.server.port");
-        book.setEnvironment(port);
-        book.setCurrency(currency);
-        book.setPrice(cambio.getConvertedValue());
-        return book;
-    }*/
 
 }

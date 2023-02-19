@@ -17,3 +17,7 @@ spring:
       path: /h2-console
   jpa:
     show-sql: true
+management:
+  tracing:
+    sampling:
+      probability: 1.0
